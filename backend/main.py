@@ -7,66 +7,201 @@ from dotenv import load_dotenv
 import os
 
 
-# Find the project folder
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# ==========================================
+# Project configuration
+# ==========================================
 
-# Load .env from the project folder
-load_dotenv(os.path.join(BASE_DIR, ".env"))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))
+)
 
-# Get Groq API key
+
+# ==========================================
+# Load environment variables
+# ==========================================
+
+load_dotenv(
+    os.path.join(BASE_DIR, ".env")
+)
+
+
 api_key = os.getenv("GROQ_API_KEY")
 
+
 if not api_key:
-    raise ValueError("GROQ_API_KEY was not found in .env")
+    raise ValueError(
+        "GROQ_API_KEY was not found in .env"
+    )
 
-# Create Groq client
-client = Groq(api_key=api_key)
 
-app = FastAPI()
+# ==========================================
+# Groq client
+# ==========================================
 
+client = Groq(
+    api_key=api_key
+)
+
+
+# ==========================================
+# FastAPI application
+# ==========================================
+
+app = FastAPI(
+    title="AI Text Summarizer",
+    description="AI-powered text summarization API",
+    version="1.0.0"
+)
+
+
+# ==========================================
+# Request model
+# ==========================================
 
 class TextRequest(BaseModel):
+
     text: str
 
+    length: str = "medium"
 
-frontend_path = os.path.join(BASE_DIR, "frontend")
+    format: str = "paragraph"
+
+
+# ==========================================
+# Frontend
+# ==========================================
+
+frontend_path = os.path.join(
+    BASE_DIR,
+    "frontend"
+)
 
 
 app.mount(
     "/static",
-    StaticFiles(directory=frontend_path),
+    StaticFiles(
+        directory=frontend_path
+    ),
     name="static"
 )
 
 
 @app.get("/")
 def home():
+
     return FileResponse(
-        os.path.join(frontend_path, "index.html")
+        os.path.join(
+            frontend_path,
+            "index.html"
+        )
     )
 
+
+# ==========================================
+# Summarization endpoint
+# ==========================================
 
 @app.post("/summarize")
 def summarize(request: TextRequest):
 
+
+    # --------------------------------------
+    # Summary length
+    # --------------------------------------
+
+    if request.length == "short":
+
+        length_instruction = (
+            "Create a very short summary "
+            "in 2 to 3 sentences. "
+            "Keep only the most important information."
+        )
+
+
+    elif request.length == "detailed":
+
+        length_instruction = (
+            "Create a detailed summary covering "
+            "the important ideas, facts and key points. "
+            "Include useful supporting details."
+        )
+
+
+    else:
+
+        length_instruction = (
+            "Create a medium-length summary "
+            "covering the main ideas and important details."
+        )
+
+
+    # --------------------------------------
+    # Summary format
+    # --------------------------------------
+
+    if request.format == "bullets":
+
+        format_instruction = (
+            "Present the summary as clear bullet points. "
+            "Use a separate bullet point for each important idea. "
+            "Do not use a large paragraph."
+        )
+
+
+    else:
+
+        format_instruction = (
+            "Present the summary as clear, "
+            "well-written paragraphs."
+        )
+
+
+    # --------------------------------------
+    # AI request
+    # --------------------------------------
+
     completion = client.chat.completions.create(
+
         model="openai/gpt-oss-120b",
+
         messages=[
+
             {
                 "role": "system",
+
                 "content": (
                     "You are an expert text summarizer. "
-                    "Create clear, accurate and concise summaries."
+                    "Create accurate, clear and easy-to-understand "
+                    "summaries. Do not add information that is "
+                    "not present in the original text."
                 )
             },
+
             {
                 "role": "user",
-                "content": f"Summarize this text:\n\n{request.text}"
+
+                "content": (
+                    f"{length_instruction}\n\n"
+                    f"{format_instruction}\n\n"
+                    f"Text to summarize:\n\n"
+                    f"{request.text}"
+                )
             }
+
         ],
+
         temperature=0.3
+
     )
 
+
+    # --------------------------------------
+    # Return result
+    # --------------------------------------
+
     return {
-        "summary": completion.choices[0].message.content
+
+        "summary":
+            completion.choices[0].message.content
+
     }

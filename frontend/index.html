@@ -1,13 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>AI Text Summarizer</title>
+
+    <meta
+        name="description"
+        content="Summarize long text quickly and accurately using AI."
+    >
 
     <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -16,66 +18,139 @@
 
     <main class="container">
 
-        <h1>✨ AI Text Summarizer</h1>
+        <!-- Header -->
+        <header class="hero">
+            <div class="logo">✦</div>
 
-        <p class="subtitle">
-            Turn long text into a clear and concise summary using AI.
-        </p>
+            <h1>AI Text Summarizer</h1>
 
-
-        <!-- Text Input -->
-
-        <textarea
-            id="textInput"
-            placeholder="Paste your text here..."
-        ></textarea>
+            <p>
+                Turn long text into clear, concise summaries
+                powered by artificial intelligence.
+            </p>
+        </header>
 
 
-        <!-- Controls -->
+        <!-- Input -->
+        <section class="card">
 
-        <div class="controls">
+            <div class="section-header">
+                <div>
+                    <h2>Enter your text</h2>
+                    <span id="wordCount">0 words</span>
+                </div>
+            </div>
 
-            <span id="wordCount">
-                0 words
+            <textarea
+                id="textInput"
+                placeholder="Paste your article, notes, paragraph, or any long text here..."
+            ></textarea>
+
+
+            <!-- Options -->
+            <div class="controls">
+
+                <div class="option-group">
+
+                    <label for="summaryLength">
+                        Summary length
+                    </label>
+
+                    <select id="summaryLength">
+                        <option value="short">Short</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="detailed">Detailed</option>
+                    </select>
+
+                </div>
+
+
+                <div class="option-group">
+
+                    <label for="summaryFormat">
+                        Format
+                    </label>
+
+                    <select id="summaryFormat">
+                        <option value="paragraph" selected>
+                            Paragraph
+                        </option>
+
+                        <option value="bullets">
+                            Bullet Points
+                        </option>
+                    </select>
+
+                </div>
+
+
+                <button id="summarizeBtn">
+                    ✨ Summarize
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Loading -->
+        <div id="loading" class="loading hidden">
+
+            <div class="spinner"></div>
+
+            <span>
+                AI is creating your summary...
             </span>
 
-            <button id="summarizeBtn">
-                ✨ Summarize
-            </button>
-
-        </div>
-
-
-        <!-- Loading Message -->
-
-        <div id="loading" class="loading hidden">
-            Summarizing your text...
         </div>
 
 
         <!-- Result -->
+        <section class="card result-card">
 
-        <section class="result">
+            <div class="result-header">
 
-            <h2>🤖 AI Summary</h2>
+                <div>
 
-            <div id="summary">
-                Your summary will appear here...
+                    <span class="result-label">
+                        AI GENERATED
+                    </span>
+
+                    <h2>🤖 Summary</h2>
+
+                </div>
+
+                <button id="copyBtn" class="secondary-btn">
+                    📋 Copy
+                </button>
+
             </div>
 
-            <button id="copyBtn">
-                📋 Copy Summary
-            </button>
+
+            <div id="summary" class="summary">
+
+                <p class="placeholder">
+                    Your AI-generated summary will appear here.
+                </p>
+
+            </div>
 
         </section>
+
+
+        <!-- Footer -->
+        <footer>
+
+            <p>
+                Built with Python, FastAPI & Groq AI
+            </p>
+
+        </footer>
 
     </main>
 
 
-    <!-- JavaScript -->
-
     <script src="/static/script.js"></script>
 
 </body>
-
 </html>
