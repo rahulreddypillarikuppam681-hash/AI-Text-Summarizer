@@ -2,8 +2,25 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-import requests
+from groq import Groq
+from dotenv import load_dotenv
 import os
+
+
+# Find the project folder
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Load .env from the project folder
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
+# Get Groq API key
+api_key = os.getenv("GROQ_API_KEY")
+
+if not api_key:
+    raise ValueError("GROQ_API_KEY was not found in .env")
+
+# Create Groq client
+client = Groq(api_key=api_key)
 
 app = FastAPI()
 
@@ -12,11 +29,8 @@ class TextRequest(BaseModel):
     text: str
 
 
-# Serve frontend files
-frontend_path = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)),
-    "frontend"
-)
+frontend_path = os.path.join(BASE_DIR, "frontend")
+
 
 app.mount(
     "/static",
@@ -35,26 +49,24 @@ def home():
 @app.post("/summarize")
 def summarize(request: TextRequest):
 
-    prompt = f"""
-Summarize the following text clearly and concisely.
-
-Text:
-{request.text}
-
-Summary:
-"""
-
-    response = requests.post(
-        "http://localhost:11434/api/generate",
-        json={
-            "model": "llama3.2",
-            "prompt": prompt,
-            "stream": False
-        }
+    completion = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are an expert text summarizer. "
+                    "Create clear, accurate and concise summaries."
+                )
+            },
+            {
+                "role": "user",
+                "content": f"Summarize this text:\n\n{request.text}"
+            }
+        ],
+        temperature=0.3
     )
 
-    result = response.json()
-
     return {
-        "summary": result["response"]
+        "summary": completion.choices[0].message.content
     }
