@@ -1,0 +1,82 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Text Summarizer</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <h1>✨ AI Text Summarizer</h1>
+
+        <p class="subtitle">
+            Turn long text into a clear and concise summary using AI.
+        </p>
+
+
+        <!-- Text Input -->
+
+        <textarea
+            id="textInput"
+            placeholder="Paste your text here..."
+        ></textarea>
+
+
+        <!-- Controls -->
+
+        <div class="controls">
+
+            <span id="wordCount">
+                0 words
+            </span>
+
+            <button id="summarizeBtn">
+                ✨ Summarize
+            </button>
+
+        </div>
+
+
+        <!-- Loading Message -->
+
+        <div id="loading" class="loading hidden">
+            Summarizing your text...
+        </div>
+
+
+        <!-- Result -->
+
+        <section class="result">
+
+            <h2>🤖 AI Summary</h2>
+
+            <div id="summary">
+                Your summary will appear here...
+            </div>
+
+            <button id="copyBtn">
+                📋 Copy Summary
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- JavaScript -->
+
+    <script src="/static/script.js"></script>
+
+</body>
+
+</html>
+```
