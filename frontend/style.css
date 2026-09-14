@@ -279,3 +279,38 @@ footer {
         width: 100%;
     }
 }
+/* ==========================================
+   File Upload
+   ========================================== */
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.file-label {
+    display: inline-block;
+    padding: 11px 16px;
+    border-radius: 12px;
+    background: #eef2ff;
+    color: #4f46e5;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.file-label:hover {
+    background: #e0e7ff;
+}
+
+#fileInput {
+    display: none;
+}
+
+#fileName {
+    color: #6b7280;
+    font-size: 14px;
+}

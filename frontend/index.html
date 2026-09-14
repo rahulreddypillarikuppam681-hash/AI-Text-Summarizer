@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>AI Text Summarizer</title>
 
@@ -11,35 +17,66 @@
         content="Summarize long text quickly and accurately using AI."
     >
 
-    <link rel="stylesheet" href="/static/style.css">
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+
 </head>
+
 
 <body>
 
     <main class="container">
 
-        <!-- Header -->
-        <header class="hero">
-            <div class="logo">✦</div>
 
-            <h1>AI Text Summarizer</h1>
+        <!-- =====================================
+             Header
+        ====================================== -->
+
+        <header class="hero">
+
+            <div class="logo">
+                ✦
+            </div>
+
+            <h1>
+                AI Text Summarizer
+            </h1>
 
             <p>
-                Turn long text into clear, concise summaries
-                powered by artificial intelligence.
+                Turn long text into clear, concise
+                summaries powered by artificial intelligence.
             </p>
+
         </header>
 
 
-        <!-- Input -->
+        <!-- =====================================
+             Input Card
+        ====================================== -->
+
         <section class="card">
 
+
             <div class="section-header">
+
                 <div>
-                    <h2>Enter your text</h2>
-                    <span id="wordCount">0 words</span>
+
+                    <h2>
+                        Enter your text
+                    </h2>
+
+                    <span id="wordCount">
+                        0 words
+                    </span>
+
                 </div>
+
             </div>
+
+
+            <!-- Text area -->
 
             <textarea
                 id="textInput"
@@ -47,8 +84,40 @@
             ></textarea>
 
 
-            <!-- Options -->
+            <!-- =================================
+                 File Upload
+            ================================== -->
+
+            <div class="file-upload">
+
+                <label
+                    for="fileInput"
+                    class="file-label"
+                >
+                    📄 Upload TXT File
+                </label>
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept=".txt"
+                >
+
+                <span id="fileName">
+                    No file selected
+                </span>
+
+            </div>
+
+
+            <!-- =================================
+                 Controls
+            ================================== -->
+
             <div class="controls">
+
+
+                <!-- Summary length -->
 
                 <div class="option-group">
 
@@ -57,13 +126,28 @@
                     </label>
 
                     <select id="summaryLength">
-                        <option value="short">Short</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="detailed">Detailed</option>
+
+                        <option value="short">
+                            Short
+                        </option>
+
+                        <option
+                            value="medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+                        <option value="detailed">
+                            Detailed
+                        </option>
+
                     </select>
 
                 </div>
 
+
+                <!-- Summary format -->
 
                 <div class="option-group">
 
@@ -72,20 +156,29 @@
                     </label>
 
                     <select id="summaryFormat">
-                        <option value="paragraph" selected>
+
+                        <option
+                            value="paragraph"
+                            selected
+                        >
                             Paragraph
                         </option>
 
                         <option value="bullets">
                             Bullet Points
                         </option>
+
                     </select>
 
                 </div>
 
 
+                <!-- Summarize -->
+
                 <button id="summarizeBtn">
+
                     ✨ Summarize
+
                 </button>
 
             </div>
@@ -93,22 +186,33 @@
         </section>
 
 
-        <!-- Loading -->
-        <div id="loading" class="loading hidden">
+        <!-- =====================================
+             Loading
+        ====================================== -->
+
+        <div
+            id="loading"
+            class="loading hidden"
+        >
 
             <div class="spinner"></div>
 
-            <span>
+            <span id="loadingText">
                 AI is creating your summary...
             </span>
 
         </div>
 
 
-        <!-- Result -->
+        <!-- =====================================
+             Result
+        ====================================== -->
+
         <section class="card result-card">
 
+
             <div class="result-header">
+
 
                 <div>
 
@@ -116,18 +220,28 @@
                         AI GENERATED
                     </span>
 
-                    <h2>🤖 Summary</h2>
+                    <h2>
+                        🤖 Summary
+                    </h2>
 
                 </div>
 
-                <button id="copyBtn" class="secondary-btn">
+
+                <button
+                    id="copyBtn"
+                    class="secondary-btn"
+                >
                     📋 Copy
                 </button>
+
 
             </div>
 
 
-            <div id="summary" class="summary">
+            <div
+                id="summary"
+                class="summary"
+            >
 
                 <p class="placeholder">
                     Your AI-generated summary will appear here.
@@ -138,7 +252,10 @@
         </section>
 
 
-        <!-- Footer -->
+        <!-- =====================================
+             Footer
+        ====================================== -->
+
         <footer>
 
             <p>
@@ -147,10 +264,12 @@
 
         </footer>
 
+
     </main>
 
 
     <script src="/static/script.js"></script>
 
 </body>
+
 </html>
